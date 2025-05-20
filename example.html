@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>VK final project</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .controls {
+            margin-bottom: 20px;
+        }
+        .block {
+            width: 300px;
+            height: 150px;
+            background-color: #4CAF50;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .ad-banner, .clock, .moving-block {
+            display: none;
+        }
+        .block img {
+            max-height: 100%;
+            max-width: 100%;
+        }
+        .moving-block {
+            position: absolute;
+            top: 10px;
+            left: 0;
+            width: 30px;
+            height: 30px;
+            background: red;
+            animation: move 2s infinite alternate;
+        }
+        @keyframes move {
+            0% { left: 0; }
+            100% { left: calc(100% - 30px); }
+        }
+    </style>
+</head>
+<body>
+<h1>VK final progect</h1>
+
+<div class="controls">
+    <label><input type="checkbox" id="change-color"> Изменить цвет фона</label><br>
+    <label><input type="checkbox" id="change-text"> Изменить текст</label><br>
+    <label><input type="checkbox" id="shift"> Сместить блок</label><br>
+    <label><input type="checkbox" id="resize"> Изменить размер блока</label><br>
+    <label><input type="checkbox" id="change-image"> Показать изображение</label><br>
+    <label><input type="checkbox" id="show-ad"> Показать баннер</label><br>
+    <label><input type="checkbox" id="show-clock"> Показать часы</label><br>
+    <label><input type="checkbox" id="animate"> Показать движущийся элемент</label><br>
+</div>
+
+<div id="demo-block" class="block">
+    Демонстрационный блок
+    <div class="moving-block" id="moving-block"></div>
+</div>
+
+<div class="ad-banner" id="ad-banner" style="background:#ffd700; padding:10px; border:1px solid #ccc;">
+    🔥 Рекламный баннер!
+</div>
+
+<div class="clock" id="clock"></div>
+
+<script>
+    const block = document.getElementById('demo-block');
+    const clock = document.getElementById('clock');
+    const movingBlock = document.getElementById('moving-block');
+
+    document.getElementById('change-color').addEventListener('change', (e) => {
+        block.style.backgroundColor = e.target.checked ? '#ff5722' : '#4CAF50';
+    });
+
+    document.getElementById('change-text').addEventListener('change', (e) => {
+        block.innerHTML = e.target.checked ? 'Изменённый текст' : 'Демонстрационный блок';
+        block.appendChild(movingBlock);
+    });
+
+    document.getElementById('shift').addEventListener('change', (e) => {
+        block.style.marginLeft = e.target.checked ? '50px' : '0';
+    });
+
+    document.getElementById('resize').addEventListener('change', (e) => {
+        block.style.width = e.target.checked ? '350px' : '300px';
+        block.style.height = e.target.checked ? '200px' : '150px';
+    });
+
+    document.getElementById('change-image').addEventListener('change', (e) => {
+        block.innerHTML = e.target.checked
+            ? '<img src="https://via.placeholder.com/150" alt="Изображение-заглушка">'
+            : 'Демонстрационный блок';
+        block.appendChild(movingBlock);
+    });
+
+    document.getElementById('show-ad').addEventListener('change', (e) => {
+        document.getElementById('ad-banner').style.display = e.target.checked ? 'block' : 'none';
+    });
+
+    document.getElementById('show-clock').addEventListener('change', (e) => {
+        clock.style.display = e.target.checked ? 'block' : 'none';
+    });
+
+    function updateClock() {
+        const now = new Date();
+        clock.textContent = '🕒 ' + now.toLocaleTimeString();
+    }
+    setInterval(updateClock, 1000);
+
+    document.getElementById('animate').addEventListener('change', (e) => {
+        movingBlock.style.display = e.target.checked ? 'block' : 'none';
+    });
+</script>
+</body>
+</html>
